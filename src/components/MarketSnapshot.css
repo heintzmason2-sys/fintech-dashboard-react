@@ -1,0 +1,46 @@
+.market-cards{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:15px;
+  margin-bottom: 30px;
+}
+
+.market-card{
+  background-color: #1a1a1a;
+  border:1px solid gold;
+  border-radius: 8px;
+  padding: 15px;
+  min-height:100px;
+}
+
+.stock-symbol {
+  font-size:14px;
+  font-weight:bold;
+}
+.market-card strong{
+  display:block;
+  font-size:20px;
+  margin-top:8px;
+}
+
+.market-card small{
+  display:block;
+  margin-top:6px;
+  font-size:13px;
+}
+
+.up{
+  color:green;
+}
+
+.down{
+  color:red;
+}
+.no-results{
+  margin-top: 20px;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+ .hero{
+  color: white;
+ }

@@ -1,0 +1,28 @@
+.hero-section {
+    background: #151515;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 40px;
+    margin: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-section h2{
+    font-size: 2.5rem;
+    margin: 0 0 12px;
+    color: white;
+}
+
+.hero-section p{
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.65;
+    color: white;
+}
+
+.hero-visual{
+    width: 280px;
+    height: 180px;
+}

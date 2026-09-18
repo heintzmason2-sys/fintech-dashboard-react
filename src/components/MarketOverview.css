@@ -1,0 +1,42 @@
+.market-overview{
+    display: flex;
+    gap: 16px;
+}
+
+.market-overview > * {
+    flex: 1;
+}
+
+.market-index-card {
+    background: #151515;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.market-name {
+    display: block;
+    font-size: block;
+    opacity: 0.7;
+    margin-bottom: 8px;
+}
+
+.market-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.market-change{
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.up {
+    color: #22c55e;
+}
+.down{
+    color: #ef4444;
+}
