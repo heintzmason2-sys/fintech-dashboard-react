@@ -6,6 +6,7 @@ import { useState } from 'react'
 import MarketOverview from './components/MarketOverview.jsx'
 import HeroSection from './HeroSection.jsx'
 import Watchlist from './WatchList.jsx'
+import DashboardMiddle from './components/DashboardMiddle.jsx'
 
 function App() {
   const [searchText, setSearchText] = useState('')
@@ -24,10 +25,8 @@ function App() {
       <HeroSection />
       <MarketOverview  />
     
-    <div className='dashboard-grid'>
-        <MarketSnapshot searchText={searchText} />
-        <Watchlist />
-    </div>
+      <MarketSnapshot searchText={searchText} />
+      <DashboardMiddle />
 
     </main>
     </div>

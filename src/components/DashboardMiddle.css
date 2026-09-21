@@ -1,0 +1,89 @@
+.dashboard-middle{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+}
+
+.market-chart,
+.market-movers {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.market-chart h2,
+.market-movers h2{
+    color: white;
+
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.chart-header strong{
+    color: white;
+    font-size: 24px;
+}
+
+.chart-header span{
+    color: #22c55e;
+}
+
+.time-ranges {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.time-ranges button {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.time-ranges button:hover{
+    background: #222;
+    color: white;
+}
+
+.chart-area{
+    height: 180px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.market-mover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+}
+
+.market-mover .up{
+    color: #22c55e;
+}
+
+.market-mover .down{
+    color: #ef4444;
+}
+
+.market-movers{
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.market-movers h2{
+    margin-top: 0;
+}
