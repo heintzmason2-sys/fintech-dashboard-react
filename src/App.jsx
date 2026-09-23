@@ -7,15 +7,22 @@ import MarketOverview from './components/MarketOverview.jsx'
 import HeroSection from './HeroSection.jsx'
 import Watchlist from './WatchList.jsx'
 import DashboardMiddle from './components/DashboardMiddle.jsx'
+import DashboardContext from './components/DashboardContext.jsx'
 
 function App() {
   const [searchText, setSearchText] = useState('')
+
+  const dashboardSettings = {
+    theme: "dark",
+    currency: "USD"
+  }
 
   function handleSearch(value){
     setSearchText(value)
   }
 
   return (
+    <DashboardContext.Provider value={dashboardSettings}>
 
     <div className="app-layout">
     <Sidebar />
@@ -30,6 +37,7 @@ function App() {
 
     </main>
     </div>
+    </DashboardContext.Provider>
 
   )
 }

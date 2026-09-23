@@ -87,3 +87,44 @@
 .market-movers h2{
     margin-top: 0;
 }
+
+.crypto-overview{
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+}
+
+.crypto-overview h2{
+    color: white;
+    margin-top: 0;
+}
+
+.crypto-item{
+    color: white;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.crypto-identity{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.crypto-item .up{
+    color: #22c55e;
+}
+
+.crypto-item .down{
+    color: #ef4444;
+}
+
+.crypto-symbol{
+    font-size: 16px;
+}

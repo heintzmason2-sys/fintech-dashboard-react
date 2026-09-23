@@ -2,7 +2,7 @@ import Watchlist from "../WatchList"
 import './DashboardMiddle.css'
 import SP500Chart from "./S&P500Chart"
 import MarketMover from "./MarketMover"
-
+import CryptoOverview from "./CryptoOverview"
 const movers = [
     { symbol: 'AAPL', change: '+2.45%' },
     { symbol: 'TSLA', change: '+1.22%' },
@@ -45,6 +45,7 @@ function DashboardMiddle(){
                     />
                 ))}
             </div>
+            <CryptoOverview />
         </div>
     )
 }
