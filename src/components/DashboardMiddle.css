@@ -1,7 +1,29 @@
 .dashboard-middle{
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+    "watchlist chart movers"
+    "crypto news portfolio";
     gap: 20px;
+}
+.watchlist{
+    grid-area: watchlist;
+}
+
+.market-chart{
+    grid-area: chart;
+}
+
+.market-movers {
+    grid-area: movers;
+}
+
+.crypto-overview {
+    grid-area: crypto;
+}
+.market-news {
+    grid-area: news;
 }
 
 .market-chart,
@@ -127,4 +149,12 @@
 
 .crypto-symbol{
     font-size: 16px;
+}
+
+.dashboard-card {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
 }

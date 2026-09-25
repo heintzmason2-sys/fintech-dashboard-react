@@ -10,7 +10,7 @@ const watchlist = [
 
 function Watchlist(){
     return(
-        <section className='watchlist'>
+        <section className='watchlist dashboard-card'>
             <h2 className="watchlist-title">My Watchlist</h2>
             {watchlist.map((stock)=>(
                 <div className='watchlist-item' key={stock.symbol}>

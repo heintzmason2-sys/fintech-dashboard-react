@@ -1,0 +1,35 @@
+.portfolio-summary h2 {
+    color: white;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.portfolio-value span,
+.portfolio-stat span {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.portfolio-value strong {
+    display: block;
+    color: white;
+    font-size: 28px;
+    margin-top: 6px;
+}
+
+.portfolio-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+}
+
+.portfolio-stat strong {
+    color: white;
+    font-size: 15px;
+}
+
+.portfolio-stat:last-child {
+    border-bottom: none;
+}

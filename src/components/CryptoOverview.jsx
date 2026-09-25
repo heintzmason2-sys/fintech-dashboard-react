@@ -48,7 +48,7 @@ function CryptoItem({ symbol, name, price, change}) {
 function CryptoOverview(){
     const settings = useContext(DashboardContext)
     return(
-        <div className="crypto-overview">
+        <div className="crypto-overview dashboard-card">
             <h2>Crypto Overview</h2>
             <p>Currency: {settings.currency}</p>
             {cryptoData.map((crypto)=>(

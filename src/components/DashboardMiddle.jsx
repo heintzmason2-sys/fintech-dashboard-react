@@ -3,6 +3,8 @@ import './DashboardMiddle.css'
 import SP500Chart from "./S&P500Chart"
 import MarketMover from "./MarketMover"
 import CryptoOverview from "./CryptoOverview"
+import MarketNews from "./MarketNews"
+import PortfolioSummary from "./PortfolioSummary"
 const movers = [
     { symbol: 'AAPL', change: '+2.45%' },
     { symbol: 'TSLA', change: '+1.22%' },
@@ -14,7 +16,7 @@ function DashboardMiddle(){
         <div className="dashboard-middle">
             <Watchlist />
 
-            <div className="market-chart">
+            <div className="market-chart dashboard-card">
                 <h2>S&P 500</h2>
 
                 <div className="chart-header">
@@ -34,7 +36,7 @@ function DashboardMiddle(){
                 </div>
             </div>
 
-            <div className="market-movers">
+            <div className="market-movers dashboard-card">
                 <h2>Market Movers</h2>
 
                 {movers.map((mover)=> (
@@ -46,6 +48,8 @@ function DashboardMiddle(){
                 ))}
             </div>
             <CryptoOverview />
+            <MarketNews />
+            <PortfolioSummary />
         </div>
     )
 }
