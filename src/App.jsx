@@ -9,6 +9,7 @@ import Watchlist from './WatchList.jsx'
 import DashboardMiddle from './components/DashboardMiddle.jsx'
 import DashboardContext from './components/DashboardContext.jsx'
 
+
 function App() {
   const [searchText, setSearchText] = useState('')
 
