@@ -12,14 +12,15 @@ import DashboardContext from './components/DashboardContext.jsx'
 
 function App() {
   const [searchText, setSearchText] = useState('')
+  const [searchResults, setSearchResults] = useState([])
 
   const dashboardSettings = {
     theme: "dark",
     currency: "USD"
   }
 
-  function handleSearch(value){
-    setSearchText(value)
+  function handleSearch(results){
+    setSearchResults(results)
   }
 
   return (
@@ -33,7 +34,10 @@ function App() {
       <HeroSection />
       <MarketOverview  />
     
-      <MarketSnapshot searchText={searchText} />
+      <MarketSnapshot
+      searchText={searchText}
+      searchResults={searchResults}
+      />
       <DashboardMiddle />
 
     </main>
