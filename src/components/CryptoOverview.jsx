@@ -1,32 +1,5 @@
-import {  useContext } from "react";
+import {  useContext, useState, useEffect } from "react";
 import DashboardContext from "./DashboardContext";
-
-const cryptoData = [
-    {
-        symbol: "BTC",
-        name: "Bitcoin",
-        price: "$64,892.21",
-        change: "+2.35%"
-    },
-    {
-        symbol: "SOL",
-        name: "Solana",
-        price: "$148.73",
-        change: "+3.21%"
-    },
-    {
-        symbol: "BNB",
-        name: "BNB",
-        price: "$587.11",
-        change: "+1.45%"
-    },
-    {
-        symbol: "XRP",
-        name: "XRP",
-        price: "$0.6123",
-        change: "+0.78%"
-    }
-]
 
 function CryptoItem({ symbol, name, price, change}) {
     
@@ -45,8 +18,61 @@ function CryptoItem({ symbol, name, price, change}) {
     )
 }
 
-function CryptoOverview(){
+const popularCrypto = [
+    { symbol: "BTC", description: "Bitcoin" },
+    { symbol: "SOL", description: "Solana" },
+    { symbol: "ETH", description: "Ethereum" },
+    { symbol: "BNB", description: "BNB" },
+    { symbol: "XRP", description: "XRP" },
+    { symbol: "DOGE", description: "Dogecoin" },
+    { symbol: "ADA", description: "Cardano" },
+    { symbol: "AVAX", description: "Avalanche" }
+];
+
+function CryptoOverview({ cryptoResults, hasSearched }){
+    console.log("Crypto Results:", cryptoResults);
     const settings = useContext(DashboardContext)
+    const [cryptoData, setCryptoData] = useState([]);
+    const [showMore, setShowMore] = useState(false);
+    console.log("showMore state:", showMore);
+  useEffect(() => {
+    const assets = hasSearched
+        ? cryptoResults
+        : showMore
+            ? popularCrypto
+            : popularCrypto.slice(0, 4);
+    console.log("Assets:", assets);
+
+    if (assets.length === 0) {
+        setCryptoData([]);
+        return;
+    }
+
+    Promise.all(
+        assets.map(crypto =>
+            fetch(`http://localhost:3000/api/crypto/${crypto.symbol}`)
+                .then(response => response.json())
+        )
+    )
+        .then(data => {
+            console.log("Crypto API Data:", data);
+
+            const formattedCrypto = data.map((crypto, index) => ({
+                symbol: assets[index].symbol,
+                name: assets[index].description,
+                price: crypto.c != null
+                    ? `$${crypto.c.toFixed(2)}`
+                    : "N/A",
+                change: crypto.dp != null
+                    ? `${crypto.dp >= 0 ? "+" : ""}${crypto.dp.toFixed(2)}%`
+                    : "N/A"
+            }));
+
+            setCryptoData(formattedCrypto);
+        })
+        .catch(error => console.error(error));
+
+}, [cryptoResults, hasSearched, showMore]);
     return(
         <div className="crypto-overview dashboard-card">
             <h2>Crypto Overview</h2>
@@ -60,6 +86,13 @@ function CryptoOverview(){
                 change={crypto.change}
                 />
             ))}
+           <button onClick={() => {
+            console.log("VIEW MORE CLICKED");
+            setShowMore(!showMore)
+
+           }}>
+           {showMore ? "View Less" : "View More"}
+           </button>
         </div>
     )
 }

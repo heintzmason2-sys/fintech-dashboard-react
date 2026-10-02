@@ -13,6 +13,8 @@ import DashboardContext from './components/DashboardContext.jsx'
 function App() {
   const [searchText, setSearchText] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [cryptoResults, setCryptoResults] = useState([])
+  const [hasSearched, setHasSearched] = useState(false)
 
   const dashboardSettings = {
     theme: "dark",
@@ -20,7 +22,10 @@ function App() {
   }
 
   function handleSearch(results){
-    setSearchResults(results)
+    const crypto = results.filter(result => result.type === "Crypto")
+    setCryptoResults(crypto)
+    setSearchResults(results.filter(result => result.type === "Common Stock"));
+    setHasSearched(true)
   }
 
   return (
@@ -37,8 +42,12 @@ function App() {
       <MarketSnapshot
       searchText={searchText}
       searchResults={searchResults}
+      hasSearched={hasSearched}
       />
-      <DashboardMiddle />
+      <DashboardMiddle 
+          cryptoResults={cryptoResults} 
+          hasSearched={hasSearched}
+          />
 
     </main>
     </div>

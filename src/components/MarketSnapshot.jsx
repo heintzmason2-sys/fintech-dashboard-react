@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'
 
 
 
-function MarketSnapshot({ searchText, searchResults }) {
+function MarketSnapshot({ searchText, searchResults, hasSearched }) {
   const [stocks, setStocks] = useState([]);
   const symbols = ["AAPL", "TSLA", "NVDA", "MSFT"]
  useEffect(() => {
     let cancelled = false
     setStocks([])
-    const symbolsToFetch = searchResults.length > 0
+    const stockResults = searchResults.filter(result => result.type === "Common Stock");
+    const symbolsToFetch = hasSearched
     ? searchResults.map(result => result.symbol)
     : symbols
     Promise.all(

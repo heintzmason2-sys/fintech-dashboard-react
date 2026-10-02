@@ -9,7 +9,7 @@ export function SearchBar({ onSearch }){
             `http://localhost:3000/api/search?q=${searchText}`
         )
         const data = await response.json()
-        console.log(data)
+        console.log(data.result[0])
         const results = data.result
         setSearchResults(results)
         onSearch(results)

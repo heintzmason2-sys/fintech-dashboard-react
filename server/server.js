@@ -3,6 +3,16 @@ import dotenv from "dotenv";
 import cors from "cors";
 dotenv.config({ path: ".env.local" });
 
+const cryptoSymbols = {
+    BTC: "Bitcoin",
+    ETH: "Ethereum",
+    SOL: "Solana",
+    BNB: "BNB",
+    XRP: "XRP",
+    DOGE: "Dogecoin",
+    ADA: "Cardano",
+    AVAX: "Avalanche"
+}
 
 const app = express();
 app.use(cors())
@@ -35,6 +45,16 @@ app.get('/api/stocks/:symbol/candle', async(req,res)=>{
 
 app.get('/api/search', async(req, res)=>{
     const query = req.query.q;
+    const crypto = cryptoSymbols[query.toUpperCase()];
+    if (crypto) {
+        return res.json({
+            result: [{
+                symbol: query.toUpperCase(),
+                description: crypto,
+                type: "Crypto"
+            }]
+        })
+    }
     const response = await fetch(
         `https://finnhub.io/api/v1/search?q=${query}&token=${process.env.FINNHUB_API_KEY}`
     );
@@ -44,6 +64,16 @@ app.get('/api/search', async(req, res)=>{
 
 app.get("/api/test", (req, res) => {
     res.json({ message: "Backend is working!" });
+})
+
+app.get('/api/crypto/:symbol', async(req, res)=>{
+    const symbol = req.params.symbol;
+    const response = await fetch(
+        `https://finnhub.io/api/v1/quote?symbol=BINANCE:${symbol}USDT&token=${process.env.FINNHUB_API_KEY}`
+    );
+    const data = await response.json();
+    console.log(data);
+    res.json(data);
 })
 
 app.listen(PORT, () => {

@@ -11,7 +11,7 @@ const movers = [
     { symbol: 'NVDA', change: '+2.45%' },
     { symbol: 'MSFT', change: '-0.53%' }
 ]
-function DashboardMiddle(){
+function DashboardMiddle({ cryptoResults, hasSearched }){
     return(
         <div className="dashboard-middle">
             <Watchlist />
@@ -47,7 +47,10 @@ function DashboardMiddle(){
                     />
                 ))}
             </div>
-            <CryptoOverview />
+            <CryptoOverview 
+            cryptoResults={cryptoResults}
+            hasSearched={hasSearched}
+            />
             <MarketNews />
             <PortfolioSummary />
         </div>
