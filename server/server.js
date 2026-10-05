@@ -76,6 +76,14 @@ app.get('/api/crypto/:symbol', async(req, res)=>{
     res.json(data);
 })
 
+app.get('/api/market-news', async(req, res)=> {
+    const response = await fetch(
+        `https://finnhub.io/api/v1/news?category=general&token=${process.env.FINNHUB_API_KEY}`
+    );
+    const data = await response.json();
+    res.json(data);
+})
+
 app.listen(PORT, () => {
     console.log(`Server Running on port ${PORT}`)
 })
