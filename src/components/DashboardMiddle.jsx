@@ -1,17 +1,45 @@
 import Watchlist from "../WatchList"
 import './DashboardMiddle.css'
 import SP500Chart from "./S&P500Chart"
-import MarketMover from "./MarketMover"
 import CryptoOverview from "./CryptoOverview"
 import MarketNews from "./MarketNews"
 import PortfolioSummary from "./PortfolioSummary"
-const movers = [
-    { symbol: 'AAPL', change: '+2.45%' },
-    { symbol: 'TSLA', change: '+1.22%' },
-    { symbol: 'NVDA', change: '+2.45%' },
-    { symbol: 'MSFT', change: '-0.53%' }
-]
+import {useEffect, useState} from "react"
+
+
 function DashboardMiddle({ cryptoResults, hasSearched }){
+    const [movers, setMovers] = useState([]);
+    const [activeTab, setActiveTab] = useState("gainers");
+
+useEffect(() => {
+    async function fetchMovers() {
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/market-movers"
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch market movers");
+            }
+
+            const result = await response.json();
+
+            setMovers(result.data);
+        } catch (error) {
+            console.error("Error fetching market movers:", error);
+        }
+    }
+
+    fetchMovers();
+}, []);
+
+const filteredMovers = movers.filter(
+    (mover) => mover.bucket === (
+        activeTab === "gainers" ? "gainer" : "loser"
+    )
+);
+    
+
     return(
         <div className="dashboard-middle">
             <Watchlist />
@@ -37,16 +65,44 @@ function DashboardMiddle({ cryptoResults, hasSearched }){
             </div>
 
             <div className="market-movers dashboard-card">
-                <h2>Market Movers</h2>
+    <h2>Market Movers</h2>
 
-                {movers.map((mover)=> (
-                    <MarketMover
-                    key={mover.symbol}
-                    symbol={mover.symbol}
-                    change={mover.change}
-                    />
-                ))}
+    <div className="market-movers-tabs">
+        <button
+            className={activeTab === "gainers" ? "active" : ""}
+            onClick={() => setActiveTab("gainers")}
+        >
+            Top Gainers
+        </button>
+
+        <button
+            className={activeTab === "losers" ? "active" : ""}
+            onClick={() => setActiveTab("losers")}
+        >
+            Top Losers
+        </button>
+    </div>
+
+    <div className="market-movers-list">
+        {filteredMovers.map((mover) => (
+            <div className="market-mover-row" key={mover.ticker}>
+                <div className="market-mover-info">
+                    <strong>{mover.ticker}</strong>
+                    <span>{mover.name_short}</span>
+                </div>
+
+                <div className="market-mover-price">
+                    <strong>${Number(mover.price).toFixed(2)}</strong>
+
+                    <span className={mover.pricechange_pct >= 0 ? "up" : "down"}>
+                        {mover.pricechange_pct >= 0 ? "+" : ""}
+                        {Number(mover.pricechange_pct).toFixed(2)}%
+                    </span>
+                </div>
             </div>
+        ))}
+    </div>
+</div>
             <CryptoOverview 
             cryptoResults={cryptoResults}
             hasSearched={hasSearched}

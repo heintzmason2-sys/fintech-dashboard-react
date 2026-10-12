@@ -84,6 +84,30 @@ app.get('/api/market-news', async(req, res)=> {
     res.json(data);
 })
 
+app.get("/api/market-movers", async (req, res)=> {
+    try{
+        const params = new URLSearchParams({
+            api_key: process.env.BUSINESSQUANT_API_KEY,
+            bucket: "both",
+            count: "5",
+            min_volume: "1000000"
+        });
+        const response = await fetch(
+            `https://data.businessquant.com/trending?${params}`
+        );
+        const data = await response.json();
+        if (!response.ok) {
+            return res.status(response.status).json(data);
+        }
+        res.json(data);
+    } catch (error) {
+        console.error("Market Movers error:", error);
+        res.status(500).json({
+            error: "Failed to fetch market movers"
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server Running on port ${PORT}`)
 })
