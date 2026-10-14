@@ -1,25 +1,108 @@
 import './Watchlist.css'
+import { useEffect, useState } from "react"
 
-const watchlist = [
-    { symbol: 'AAPL', name: 'Apple', price: '$316.85', change: '+1.25%' },
-    { symbol: 'TSLA', name: 'Tesla', price: '$1,024.86', change: '-0.89%' },
-    { symbol: 'NVDA', name: 'Nvidia',price: '$220.15', change: '+2.45%' },
-    { symbol: 'BTC', name: 'Bitcoin', price: '$28,000.00', change: '-1.75%' },
-    { symbol: 'MSFT', name: 'Microsoft', price: '$280.50', change: '-0.53%' }
-]
 
 function Watchlist(){
+    const [watchlist, setWatchlist] = useState([]);
+    const [logos, setLogos] = useState({});
+    useEffect(()=> {
+        async function fetchWatchlist(){
+            try {
+                const response = await fetch(
+                    "http://localhost:3000/api/watchlist"
+                );
+                if (!response.ok) {
+                    throw new Error("Failed to fetch watchlist");
+                }
+                const result = await response.json();
+                setWatchlist(result);
+            } catch (error){
+                console.error("Error fetching watchlist:", error);
+            }
+        }
+        fetchWatchlist();
+    }, []);
+
+    useEffect(() => {
+    async function fetchLogos() {
+        try {
+            const logoPromises = watchlist.map(async (stock) => {
+                const response = await fetch(
+                    `http://localhost:3000/api/stock-profile/${stock.ticker}`
+                );
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch logo for ${stock.ticker}`);
+                }
+
+                const profile = await response.json();
+
+                return {
+                    ticker: stock.ticker,
+                    logo: profile.logo
+                };
+            });
+
+            const results = await Promise.all(logoPromises);
+
+            const logoMap = {};
+
+            results.forEach((stock) => {
+                logoMap[stock.ticker] = stock.logo;
+            });
+
+            setLogos(logoMap);
+
+        } catch (error) {
+            console.error("Error fetching logos:", error);
+        }
+    }
+
+    if (watchlist.length > 0) {
+        fetchLogos();
+    }
+}, [watchlist]);
     return(
         <section className='watchlist dashboard-card'>
             <h2 className="watchlist-title">My Watchlist</h2>
-            {watchlist.map((stock)=>(
-                <div className='watchlist-item' key={stock.symbol}>
-                    <span className='stock-symbol'>{stock.symbol}</span>
-                    <span className='stock-name'>{stock.name}</span>
-                    <span className='stock-price'>{stock.price}</span>
-                    <span className={stock.change.startsWith('+')? 'up' : 'down'}>{stock.change}</span>
-                </div>
-            ))}
+            {watchlist.map((stock) => (
+    <div className="watchlist-item" key={stock.ticker}>
+        <div className="watchlist-stock-identity">
+           <div className="watchlist-logo">
+    {logos[stock.ticker] ? (
+        <img
+            src={logos[stock.ticker]}
+            alt={`${stock.name_short} logo`}
+            className="watchlist-company-logo"
+        />
+    ) : (
+        stock.ticker.slice(0, 1)
+    )}
+</div>
+
+            <div className="watchlist-stock-info">
+                <strong className="stock-symbol">
+                    {stock.ticker}
+                </strong>
+
+                <span className="stock-name">
+                    {stock.name_short}
+                </span>
+            </div>
+        </div>
+
+        <div className="watchlist-stock-price">
+            <strong className="stock-price">
+                ${Number(stock.price).toFixed(2)}
+            </strong>
+
+            <span className={stock.pricechange_pct >= 0 ? "up" : "down"}>
+                {stock.pricechange_pct >= 0 ? "+" : ""}
+                {Number(stock.pricechange_pct).toFixed(2)}%
+            </span>
+        </div>
+    </div>
+))}
         </section>
     )
 }

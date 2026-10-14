@@ -13,6 +13,7 @@ function DashboardMiddle({ cryptoResults, hasSearched }){
 
 useEffect(() => {
     async function fetchMovers() {
+        console.log("Fetching BusinessQuant market movers...");
         try {
             const response = await fetch(
                 "http://localhost:3000/api/market-movers"
@@ -23,6 +24,8 @@ useEffect(() => {
             }
 
             const result = await response.json();
+            console.log("Business Quant Data:", result);
+            console.log("First stock:", result.data[0]);
 
             setMovers(result.data);
         } catch (error) {

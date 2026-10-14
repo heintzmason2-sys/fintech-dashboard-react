@@ -108,6 +108,51 @@ app.get("/api/market-movers", async (req, res)=> {
     }
 });
 
+app.get("/api/watchlist", async (req, res) => {
+    try {
+        const params = new URLSearchParams({
+            api_key: process.env.BUSINESSQUANT_API_KEY,
+            bucket: "both",
+            count: "25",
+            min_volume: "1000000"
+        });
+        const response = await fetch(
+            `https://data.businessquant.com/trending?${params}`
+        );
+        const result = await response.json();
+        if (!response.ok) {
+            return res.status(response.status).json(result);
+        }
+        const watchlist = result.data
+            .sort((a, b)=> b.volume - a.volume)
+            .slice(0, 6)
+        console.log("Watchlist stock fields:", Object.keys(watchlist[0]));
+        res.json(watchlist);
+    } catch (error) {
+        console.error("Watchlist error:", error);
+        res.status(500).json({
+            error: "Failed to fetch watchlist"
+        });
+    }
+});
+
+app.get('/api/stock-profile/:symbol', async (req, res)=> {
+    try {
+        const symbol = req.params.symbol;
+        const response = await fetch(
+            `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${process.env.FINNHUB_API_KEY}`
+        );
+        const data = await response.json();
+        if (!response.ok){
+            return res.status(response.status).json(data)
+        }
+        res.json(data)
+    } catch(error) {
+        console.error("Stock profile error:", error);
+        res.status(500).json({error: "Failed to fetch stock profile"});
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server Running on port ${PORT}`)
 })
