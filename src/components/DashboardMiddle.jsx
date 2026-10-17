@@ -10,6 +10,9 @@ import {useEffect, useState} from "react"
 function DashboardMiddle({ cryptoResults, hasSearched }){
     const [movers, setMovers] = useState([]);
     const [activeTab, setActiveTab] = useState("gainers");
+    const [selectedInterval, setSelectedInterval] = useState("1D");
+    const [marketSummary, setMarketSummary] = useState(null);
+    const [marketSummaryError, setMarketSummaryError] = useState("");
 
 useEffect(() => {
     async function fetchMovers() {
@@ -36,6 +39,34 @@ useEffect(() => {
     fetchMovers();
 }, []);
 
+useEffect(() => {
+    async function fetchMarketSummary() {
+        try {
+            setMarketSummaryError("");
+
+            const response = await fetch(
+                `http://localhost:3000/api/market/sp500?interval=${selectedInterval}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch S&P 500 summary");
+            }
+
+            const result = await response.json();
+
+            setMarketSummary(result);
+        } catch (error) {
+            console.error("S&P 500 summary error:", error);
+
+            setMarketSummaryError(
+                "Unable to load S&P 500 market data."
+            );
+        }
+    }
+
+    fetchMarketSummary();
+}, [selectedInterval]);
+
 const filteredMovers = movers.filter(
     (mover) => mover.bucket === (
         activeTab === "gainers" ? "gainer" : "loser"
@@ -51,19 +82,52 @@ const filteredMovers = movers.filter(
                 <h2>S&P 500</h2>
 
                 <div className="chart-header">
-                    <strong>5,634.61</strong>
-                    <span>+25.15 (0.45%)</span>
+                    <strong>
+        {marketSummary
+            ? marketSummary.currentPrice?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })
+            : "Loading..."}
+    </strong>
+
+    {marketSummary && (
+        <span
+            className={
+                marketSummary.change < 0 ? "down" : "up"
+            }
+        >
+            {marketSummary.change > 0 ? "+" : ""}
+            {marketSummary.change?.toFixed(2)}
+            {" ("}
+            {marketSummary.changePercent?.toFixed(2)}
+            {"%)"}
+
+        </span>
+    
+    )}
+
+    {marketSummaryError && (
+        <span>{marketSummaryError}</span>
+    )}
                 </div>
+
+
+
                 <div className="time-ranges">
-                    <button>1D</button>
-                    <button>1W</button>
-                    <button>1M</button>
-                    <button>3M</button>
-                    <button>1Y</button>
-                    <button>All</button>
+                    {["1D", "1W", "1M", "3M", "1Y"].map((interval)=>(
+                        <button
+                            key={interval}
+                            className={selectedInterval === interval ? "active": ""}
+                            onClick={() => setSelectedInterval(interval)}
+                        >
+                            {interval}
+
+                        </button>
+                    ))}
                 </div>
                 <div className="chart-area">
-                    <SP500Chart />
+                    <SP500Chart interval={selectedInterval} />
                 </div>
             </div>
 

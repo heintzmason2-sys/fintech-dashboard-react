@@ -52,8 +52,12 @@
     font-size: 24px;
 }
 
-.chart-header span{
+.chart-header span.up{
     color: #22c55e;
+}
+
+.chart-header span.down{
+    color: #ef4444;
 }
 
 .time-ranges {

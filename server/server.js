@@ -153,6 +153,148 @@ app.get('/api/stock-profile/:symbol', async (req, res)=> {
     }
 });
 
+app.get("/api/market/sp500", async (req, res) => {
+    try {
+        // 1. Define the available time intervals
+        const intervals = {
+            "1D": { range: "1d", interval: "5m" },
+            "1W": { range: "5d", interval: "30m" },
+            "1M": { range: "1mo", interval: "1d" },
+            "3M": { range: "3mo", interval: "1d" },
+            "1Y": { range: "1y", interval: "1wk" },
+            "All": { range: "max", interval: "1mo" }
+        };
+
+        // 2. Read the selected interval from the request
+        const selectedInterval = req.query.interval || "1D";
+        const settings = intervals[selectedInterval];
+
+        // 3. Validate the requested interval
+        if (!settings) {
+            return res.status(400).json({
+                error: "Invalid interval",
+                supportedIntervals: Object.keys(intervals)
+            });
+        }
+
+        // 4. Build the Yahoo Finance request URL
+        const url = new URL(
+            "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
+        );
+
+        url.searchParams.set("range", settings.range);
+        url.searchParams.set("interval", settings.interval);
+
+        // 5. Request historical S&P 500 data
+        const response = await fetch(url, {
+            headers: {
+                "User-Agent": "Mozilla/5.0"
+            },
+            signal: AbortSignal.timeout(10000)
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                `Yahoo Finance returned status ${response.status}`
+            );
+        }
+
+        const result = await response.json();
+        const chartResult = result.chart?.result?.[0];
+
+        if (!chartResult) {
+            throw new Error(
+                result.chart?.error?.description ||
+                "No S&P 500 data returned"
+            );
+        }
+
+        // 6. Extract the historical timestamps and closing prices
+        const timestamps = chartResult.timestamp || [];
+        const prices =
+            chartResult.indicators?.quote?.[0]?.close || [];
+
+        const data = timestamps
+            .map((timestamp, index) => ({
+                time: timestamp * 1000,
+                value: prices[index]
+            }))
+            .filter(
+                (point) =>
+                    point.value !== null &&
+                    Number.isFinite(point.value)
+            );
+
+        // 7. Extract current market information
+       const meta = chartResult.meta;
+const currentPrice = meta.regularMarketPrice;
+
+// Use the latest two daily closing prices to calculate today's change,
+// regardless of which historical interval is selected.
+const dailyUrl = new URL(
+    "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC"
+);
+dailyUrl.searchParams.set("range", "1d");
+dailyUrl.searchParams.set("interval", "5m");
+
+const dailyResponse = await fetch(dailyUrl, {
+    headers: { "User-Agent": "Mozilla/5.0" },
+    signal: AbortSignal.timeout(10000)
+});
+
+let previousClose = null;
+console.log("Daily response previous close will be checked");
+if (dailyResponse.ok) {
+    const dailyResult = await dailyResponse.json();
+    const dailyMeta = dailyResult.chart?.result?.[0]?.meta;
+
+    if (dailyMeta) {
+    console.log("Daily chart metadata:", dailyMeta);
+    console.log("Daily chart previous close:", dailyMeta.chartPreviousClose);
+
+    previousClose = dailyMeta.chartPreviousClose;
+}
+}
+
+const change =
+    Number.isFinite(currentPrice) && Number.isFinite(previousClose)
+        ? currentPrice - previousClose
+        : null;
+console.log("Final market summary:", {
+    currentPrice,
+    previousClose,
+    change
+});
+const changePercent =
+    change !== null && previousClose !== 0
+        ? (change / previousClose) * 100
+        : null;
+
+        // 8. Send the data to the React frontend
+        res.json({
+            symbol: "^GSPC",
+            name: "S&P 500",
+            interval: selectedInterval,
+            currency: meta.currency,
+            currentPrice,
+            previousClose,
+            change,
+            changePercent,
+            data
+        });
+
+    } catch (error) {
+        console.error(
+            "S&P 500 market data error:",
+            error.message
+        );
+
+        res.status(502).json({
+            error: "Unable to retrieve S&P 500 market data"
+        });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server Running on port ${PORT}`)
 })
