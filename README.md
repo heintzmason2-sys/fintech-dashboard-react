@@ -1,16 +1,77 @@
-# React + Vite
+# Fintech Dashboard React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern fintech dashboard built with React that brings stock market data, market trends, and portfolio information into one interface. This project demonstrates component-based development, API integration, asynchronous JavaScript, and responsive dashboard design.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The Fintech Dashboard provides a centralized view of market information through a dark-themed interface with gold accents. It combines market index data, stock information, cryptocurrency search results, and portfolio summaries into an interactive dashboard.
 
-## React Compiler
+The application uses React for the frontend and an Express backend to retrieve market data from API services.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+### Market Overview
+- Displays the S&P 500, NASDAQ Composite, Dow Jones Industrial Average, and VIX.
+- Retrieves market information through backend API endpoints.
+- Displays current index values and percentage changes.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Market Snapshot
+- Displays stock market information in organized cards.
+- Supports displaying search results for stocks.
+- Provides visual indicators for positive and negative price movements.
+
+### Interactive Watchlist
+- Retrieves watchlist stocks from the backend.
+- Displays ticker symbols, company names, prices, and percentage changes.
+- Fetches company logos and displays them alongside stock information.
+
+### S&P 500 Chart
+- Displays historical S&P 500 market data.
+- Supports multiple time ranges, including 1 day, 1 week, 1 month, 3 months, and 1 year.
+- Includes formatted chart tooltips for easier data interpretation.
+
+### Market Movers
+- Retrieves market mover information from the backend.
+- Allows switching between top gainers and top losers.
+- Displays stock prices and percentage changes with color-coded indicators.
+
+### Cryptocurrency Overview
+- Displays cryptocurrency search results.
+- Organizes cryptocurrency information within the dashboard.
+
+### Portfolio Summary
+- Presents sample portfolio information.
+- Uses clearly labeled demonstration data rather than representing a connected brokerage account.
+
+### User Interface
+- Dark-themed interface with gold accents.
+- Sidebar navigation.
+- Interactive hero buttons with smooth scrolling.
+- Hover effects and organized dashboard cards.
+- Responsive grid layouts for dashboard components.
+
+## Technologies Used
+
+- React
+- JavaScript (ES6+)
+- Vite
+- CSS3
+- Node.js
+- Express
+- REST APIs
+- Fetch API
+- Async/await
+- Recharts
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm
+- Git
+- A terminal or code editor such as Visual Studio Code
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/heintzmason2-sys/fintech-dashboard-react.git
