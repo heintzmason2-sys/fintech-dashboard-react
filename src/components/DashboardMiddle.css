@@ -1,11 +1,14 @@
 .dashboard-middle{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: auto auto;
-    grid-template-areas: 
-    "watchlist chart movers"
-    "crypto news portfolio";
+    grid-template-areas:
+        "watchlist chart movers"
+        "crypto news portfolio";
     gap: 20px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 .watchlist{
     grid-area: watchlist;
@@ -106,8 +109,8 @@
 }
 
 .market-movers{
-    height: 100%;
     box-sizing: border-box;
+    min-width: 0;
 }
 
 .market-movers h2{
@@ -128,19 +131,26 @@
 }
 
 .crypto-item{
-    color: white;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    column-gap: 10px;
     padding: 12px 0;
     border-bottom: 1px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    color: white;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .crypto-identity{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    min-width: 0;
+    overflow: hidden;
+}
+.crypto-identity span{
+    white-space: nowrap;
 }
 
 .crypto-item .up{
@@ -152,7 +162,32 @@
 }
 
 .crypto-symbol{
-    font-size: 16px;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+.crypto-item .up,
+.crypto-item .down{
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.crypto-name{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.crypto-price{
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.crypto-change{
+    white-space: nowrap;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
 }
 
 .dashboard-card {
@@ -209,12 +244,12 @@
 }
 
 .market-mover-row{
-    display:flex;
+    display:grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap:12px;
     padding: 14px 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #333;
 }
 
 .market-mover-row:last-child{
@@ -229,23 +264,35 @@
 }
 
 .market-mover-info strong{
-    color: #111827;
+    color: #ffffff;
     font-size: 0.95rem;
     font-weight: 700;
 }
 
 .market-mover-info span{
     overflow: hidden;
-    color: #64748b;
+    color: #b0b0b0;
     font-size: 0.8rem;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
+.market-mover-price{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    min-width: 100px;
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 
+}
 .market-mover-price strong{
-    color: #111827;
+    color: #ffffff;
     font-size: 0.9rem;
     font-weight: 600;
+    display: block;
 }
 
 .market-mover-price .up{
@@ -260,3 +307,7 @@
     font-weight: 600;
 }
 
+.portfolio-summary{
+    grid-area: portfolio;
+    min-width: 0;
+}

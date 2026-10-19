@@ -8,7 +8,10 @@ const portfolio ={
 export default function PortfolioSummary(){
     return(
         <section className="portfolio-summary dashboard-card">
-            <h2>Portfolio Summary</h2>
+            <div className="portfolio-heading">
+                <h2>Portfolio Summary</h2>
+                <span className="demo-label">DEMO DATA</span>
+            </div>
             <div className="portfolio-value">
                 <span>Portfolio Value</span>
                 <strong>{portfolio.value}</strong>

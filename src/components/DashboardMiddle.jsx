@@ -175,7 +175,9 @@ const filteredMovers = movers.filter(
             hasSearched={hasSearched}
             />
             <MarketNews />
-            <PortfolioSummary />
+            <section id="portfolio-summary">
+                <PortfolioSummary />
+            </section>
         </div>
     )
 }

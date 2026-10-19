@@ -34,16 +34,19 @@ function App() {
     <div className="app-layout">
     <Sidebar />
 
-    <main>
+    <main id='dashboard'>
       <SearchBar onSearch={handleSearch} />
       <HeroSection />
-      <MarketOverview  />
+      <div id='market-overview'>
+        <MarketOverview />
+      </div>
     
       <MarketSnapshot
       searchText={searchText}
       searchResults={searchResults}
       hasSearched={hasSearched}
       />
+      
       <DashboardMiddle 
           cryptoResults={cryptoResults} 
           hasSearched={hasSearched}

@@ -63,7 +63,7 @@ function Watchlist(){
     }
 }, [watchlist]);
     return(
-        <section className='watchlist dashboard-card'>
+        <section id='watchlist' className='watchlist dashboard-card'>
             <h2 className="watchlist-title">My Watchlist</h2>
             {watchlist.map((stock) => (
     <div className="watchlist-item" key={stock.ticker}>

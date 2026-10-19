@@ -11,6 +11,18 @@
   border-radius: 8px;
   padding: 15px;
   min-height:100px;
+  transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+}
+
+.market-card:hover{
+  transform: translateY(-4px);
+  border-color: #f5c451;
+  background-color: #222222;
+  box-shadow: 0 6px 18px rgba(245, 196, 81, 0.12);
 }
 
 .stock-symbol {

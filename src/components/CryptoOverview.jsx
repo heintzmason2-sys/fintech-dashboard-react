@@ -1,21 +1,21 @@
 import {  useContext, useState, useEffect } from "react";
 import DashboardContext from "./DashboardContext";
 
-function CryptoItem({ symbol, name, price, change}) {
-    
-    return(
+function CryptoItem({ symbol, name, price, change }) {
+    return (
         <div className="crypto-item">
             <div className="crypto-identity">
                 <strong className="crypto-symbol">{symbol}</strong>
-                <p>{name}</p>
+                <span className="crypto-name">{name}</span>
             </div>
 
-            <p>{price}</p>
-            <p className={change.startsWith("+")? 'up' : 'down'}>
+            <span className="crypto-price">{price}</span>
+
+            <span className={`crypto-change ${change.startsWith("+") ? "up" : "down"}`}>
                 {change}
-            </p>
+            </span>
         </div>
-    )
+    );
 }
 
 const popularCrypto = [

@@ -1,42 +1,107 @@
-.market-overview{
-    display: flex;
+/* Market overview layout */
+.market-overview {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
+    margin: 28px 0 36px;
 }
 
-.market-overview > * {
-    flex: 1;
-}
-
+/* Individual market cards */
 .market-index-card {
-    background: #151515;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    padding: 20px;
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(
+        145deg,
+        #191919,
+        #111111
+    );
+
+    border: 1px solid #303030;
+    border-radius: 14px;
+
+    padding: 24px;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
+/* Subtle hover effect */
+.market-index-card:hover {
+    border-color: #9b7b35;
+    transform: translateY(-3px);
+
+    background: linear-gradient(
+        145deg,
+        #202020,
+        #141414
+    );
+}
+
+/* Market index name */
 .market-name {
     display: block;
-    font-size: block;
-    opacity: 0.7;
-    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #b5b5b5;
+    margin-bottom: 12px;
 }
 
+/* Current market value */
 .market-value {
     display: block;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 6px;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
 }
 
-.market-change{
+/* Daily price movement */
+.market-change {
     margin: 0;
-    font-size: 0.85rem;
-    opacity: 0.8;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
 }
 
+/* Positive movement */
 .up {
     color: #22c55e;
 }
-.down{
+
+/* Negative movement */
+.down {
     color: #ef4444;
+}
+
+
+/* Tablet layout */
+@media (max-width: 1000px) {
+    .market-overview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .market-index-card {
+        padding: 20px;
+    }
+}
+
+/* Mobile layout */
+@media (max-width: 550px) {
+    .market-overview {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .market-index-card {
+        padding: 20px;
+    }
 }
