@@ -1,77 +1,151 @@
-# Fintech Dashboard React
+# Fintech Dashboard
 
-A modern fintech dashboard built with React that brings stock market data, market trends, and portfolio information into one interface. This project demonstrates component-based development, API integration, asynchronous JavaScript, and responsive dashboard design.
+A full-stack financial dashboard built with React, Vite, Node.js, and Express. Integrates external financial data sources to provide market insights, stock information, cryptocurrency data, and financial news through an interactive dashboard.
+
+## Screenshots
+
+### Full Dashboard
+![Fintech Dashboard](screenshots/dashboard.png)
+
+### S&P 500 Interactive Chart
+![S&P 500 Chart](screenshots/S%26P-500-chart.png)
+
+### Market Movers and Watchlist
+![Market Movers](screenshots/market-movers.png)
 
 ## Overview
 
-The Fintech Dashboard provides a centralized view of market information through a dark-themed interface with gold accents. It combines market index data, stock information, cryptocurrency search results, and portfolio summaries into an interactive dashboard.
+The Fintech Dashboard combines a React frontend with a Node.js and Express backend to retrieve and display financial market information from external APIs.
 
-The application uses React for the frontend and an Express backend to retrieve market data from API services.
+This project demonstrates full-stack JavaScript development, REST API integration, asynchronous data retrieval, interactive data visualization, and environment-based API credential management.
 
 ## Features
 
 ### Market Overview
 - Displays the S&P 500, NASDAQ Composite, Dow Jones Industrial Average, and VIX.
 - Retrieves market information through backend API endpoints.
-- Displays current index values and percentage changes.
-
-### Market Snapshot
-- Displays stock market information in organized cards.
-- Supports displaying search results for stocks.
-- Provides visual indicators for positive and negative price movements.
+- Displays index values and percentage changes.
 
 ### Interactive Watchlist
-- Retrieves watchlist stocks from the backend.
-- Displays ticker symbols, company names, prices, and percentage changes.
-- Fetches company logos and displays them alongside stock information.
+- Displays selected stocks with company names, prices, and percentage changes.
+- Retrieves company logos and financial information.
 
 ### S&P 500 Chart
-- Displays historical S&P 500 market data.
-- Supports multiple time ranges, including 1 day, 1 week, 1 month, 3 months, and 1 year.
-- Includes formatted chart tooltips for easier data interpretation.
+- Interactive historical market chart built with Recharts.
+- Multiple selectable time ranges: 1 day, 1 week, 1 month, 3 months, and 1 year.
+- Formatted price and date tooltips.
 
 ### Market Movers
-- Retrieves market mover information from the backend.
-- Allows switching between top gainers and top losers.
-- Displays stock prices and percentage changes with color-coded indicators.
+- Displays top-performing and declining stocks.
+- Switches between top gainers and top losers.
+- Displays stock prices and percentage changes.
 
-### Cryptocurrency Overview
-- Displays cryptocurrency search results.
-- Organizes cryptocurrency information within the dashboard.
+### Cryptocurrency
+- Displays cryptocurrency information and search results.
+
+### Financial News
+- Integrates external financial news data into the dashboard.
 
 ### Portfolio Summary
-- Presents sample portfolio information.
-- Uses clearly labeled demonstration data rather than representing a connected brokerage account.
+- Displays sample portfolio information using demonstration data.
+- Does not connect to an actual brokerage account.
 
-### User Interface
-- Dark-themed interface with gold accents.
-- Sidebar navigation.
-- Interactive hero buttons with smooth scrolling.
-- Hover effects and organized dashboard cards.
-- Responsive grid layouts for dashboard components.
+## Technology Stack
 
-## Technologies Used
-
+**Frontend**
 - React
-- JavaScript (ES6+)
 - Vite
+- JavaScript (ES6+)
 - CSS3
+- Recharts
+
+**Backend**
 - Node.js
 - Express
 - REST APIs
 - Fetch API
 - Async/await
-- Recharts
+- CORS
 
-## Getting Started
+**External Data Sources**
+- Finnhub
+- BusinessQuant
+- Yahoo Finance News
+
+## Project Architecture
+
+The application uses a frontend/backend architecture:
+
+- React and Vite handle the user interface and dashboard components.
+- Node.js and Express handle backend routes and external API requests.
+- External financial services provide market information.
+- Environment variables keep API credentials separate from frontend source code.
+
+## Installation and Setup
 
 ### Prerequisites
-
-- Node.js and npm
+- Node.js
+- npm
 - Git
-- A terminal or code editor such as Visual Studio Code
 
 ### 1. Clone the repository
 
 ```bash
 git clone https://github.com/heintzmason2-sys/fintech-dashboard-react.git
+cd fintech-dashboard-react
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env.local` file in the project root.
+
+Add your own API credentials using the variable names expected by the backend.
+
+The `.env.local` file is excluded from version control through `.gitignore`.
+
+**Never commit API keys or other credentials to GitHub.**
+
+### 4. Start the backend
+
+Open a terminal in the project directory:
+
+```bash
+npm run server
+```
+
+The Express backend starts on port `3000`.
+
+### 5. Start the frontend
+
+Open a second terminal in the project directory:
+
+```bash
+npm run dev
+```
+
+Vite provides a local development URL, typically:
+
+```text
+http://localhost:5173/
+```
+
+Open the address in your browser to use the dashboard.
+
+## API Usage
+
+The dashboard retrieves information from external financial data providers.
+
+API availability and request limits depend on the providers' plans and usage policies. Some data may be subject to refresh limits.
+
+## Future Improvements
+
+- Expand cryptocurrency data coverage.
+- Add additional financial data integrations.
+- Expand portfolio analytics.
+- Improve dashboard functionality and data visualization.
