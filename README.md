@@ -8,7 +8,7 @@ A full-stack financial dashboard built with React, Vite, Node.js, and Express. I
 ![Fintech Dashboard](screenshots/dashboard.png)
 
 ### S&P 500 Interactive Chart
-![S&P 500 Chart](screenshots/S%26P-500-chart.png)
+![S&P 500 Chart](screenshots/sp500-chart.png)
 
 ### Market Movers and Watchlist
 ![Market Movers](screenshots/market-movers.png)
